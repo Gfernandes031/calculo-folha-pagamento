@@ -1,0 +1,205 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+// variaveis
+        String nome,cargo,cpf,mes,data;
+        int depe;
+
+        double  periculosidade,insalubridade, trasporte,
+                alimentacao, jornada,
+                jsemanal, jmensal, dias, grau,diastrabalhados,
+                valorpassagem, valoralimentacao,diastrabalhados2,
+                salario, shora,sgrau,descontobruto,descontotrasporte,
+                cpericulosidade, ins,f1,f2,f3,f4,fgt,i1,i2,i3,i4,i5,basec,
+                descontoirf,depedentes,dedu, sliquido,salariototal,comisao,bonus;
+
+        Scanner ler = new Scanner(System.in);
+
+// Entrada de dados
+
+        // informaçoes do funcionario
+
+        System.out.println("digite o Nome completo do colaborador: ");
+        nome = ler.nextLine();
+
+        System.out.println("digite o Mês de referência: ");
+        mes =ler.nextLine();
+
+        System.out.println("digite a Data de admissão: ");
+        data =ler.nextLine();
+
+        System.out.println("digite o CPF do colaborador: ");
+        cpf = ler.nextLine();
+
+        System.out.println("digite o Cargo do colaborador: ");
+        cargo =ler.nextLine();
+
+        System.out.println("digite quantas horas o colaborador trabalha por dia: ");
+        jornada = ler.nextInt();
+
+        System.out.println("Quantos dias o coloborador trabalha na semana: ");
+        dias = ler.nextInt();
+
+        System.out.println("digite o Salário Bruto do colaborador: ");
+        salario =ler.nextDouble();
+
+        System.out.println("Digite o numero de depedentes do colaborador: ");
+        depe = ler.nextInt();
+
+        // Adicionais do funcionario
+
+        System.out.println("digite o Valor das comissões do colaborador se não possui digite 0: ");
+        comisao = ler.nextDouble();
+
+        System.out.println("Digite o Valor do bonus se não possui digite 0: ");
+        bonus = ler.nextDouble();
+
+        System.out.println("O colaborador recebe adicional de periculosidade \n Não digite: 1 \n Sim digite: 2 ");
+        periculosidade = ler.nextDouble();
+
+        System.out.println("O colaborador recebe adicional de insalubridade \n Não digite 1 \n Sim digite: 2 ");
+        insalubridade = ler.nextDouble();
+
+        // insalubridade
+
+        boolean p2 = insalubridade > 1;
+        if (p2) {
+            System.out.println("Digite a porcetagem diacordo com grau: \n Baixo:10 \n Medio:20 \n Alto:40");
+            grau = ler.nextDouble();
+            sgrau = salario * grau / 100;}
+        else sgrau = 0;
+
+
+        // Descontos do funcionario
+
+        System.out.println("O colaborador recebe Vale trasporte \n  Não digite: 1 \n Sim digite: 2 ");
+        trasporte = ler.nextDouble();
+
+        System.out.println("\"O colaborador recebe Vale Alimentação \n  Não digite: 1 \\n Sim digite: 2 \"");
+        alimentacao = ler.nextDouble();
+
+// calculos
+
+        // salario hora
+
+        jsemanal = jornada * dias;
+        jmensal = jsemanal * 5;
+        shora = salario / jmensal;
+
+        //periculosida
+
+        boolean p1 = periculosidade > 1;
+        if (p1) {cpericulosidade = salario * 30 / 100;}
+        else cpericulosidade = 0;
+
+        //vale trasporte
+
+        boolean v1 = trasporte > 1;
+        if (v1) {
+            diastrabalhados = jmensal / 8;
+            valorpassagem = diastrabalhados * 9;
+            descontobruto = salario * 6 / 100;
+
+            boolean v4 = valorpassagem > descontobruto;
+
+            if (v4) {descontotrasporte = descontobruto;}
+            else descontotrasporte = valorpassagem;}
+            else descontotrasporte = 0;
+
+            //vale alimentação
+
+        diastrabalhados2 = jmensal /8;
+        boolean A1 = alimentacao > 1;
+        if (A1) {valoralimentacao = diastrabalhados2* 24;}
+        else valoralimentacao = 0;
+
+           //calculo inss
+
+        if (salario < 1302) { f1 = salario*7.5/100;}
+        else f1 = 0;
+
+        if (salario >= 1302.01 && salario < 2057.29){ f2 = salario*9/100 + 97.65;}
+        else f2 = 0 ;
+
+        if (salario >= 2571.30 && salario < 3856.94){ f3 = salario*12/100 + 114.24;}
+        else f3 = 0 ;
+
+        if (salario >= 3856.95 && salario < 7507.49){ f4 = salario*14/100 + 154.28;}
+        else f4 = 877.24;
+
+        ins = f1+f2+f3+f4;
+
+        // calculo fgts
+
+        fgt = salario*8/100;
+
+        // calculo irrf
+
+        depedentes = depe*189.59;
+        dedu = depedentes + ins;
+        basec = salario - dedu;
+
+        if (basec < 1903.98) { i1 = 0.0;}
+        else i1 = 0;
+
+        if (basec >= 1903.99 && basec < 2826.65){ i2 = basec*7.5/100 - 142.80;}
+        else i2 = 0 ;
+
+        if (basec >= 2826.66 && basec < 3751.05 ){ i3 = basec*15/100 - 354.80;}
+        else i3 = 0 ;
+
+        if (basec >= 3751.06 && basec < 4664.68){ i4 = basec*22.5/100 - 636.13;}
+        else i4 = 0 ;
+
+        if (basec > 4664.68 ){ i5 = basec*27.5/100 - 869.36;}
+        else i5 = 0;
+
+        descontoirf = i1+i2+i3+i4+i5;
+
+        //calculo salario liquido
+
+        sliquido = salario - ins - fgt - descontotrasporte;
+
+        // slario com as gratificaçoes
+
+        salariototal = sliquido + comisao + bonus + cpericulosidade + sgrau + valoralimentacao;
+
+        // folha de pagamento
+
+        System.out.println("Nome do colaborador: "+nome);
+
+        System.out.println("Data de admissão do colaborador: "+data);
+
+        System.out.println("Mês de referencia: "+mes);
+
+        System.out.println("Cargo do colaborador: "+cargo);
+
+        System.out.println("CPF do colaborador: "+cpf);
+
+        System.out.println("Adicional de comisão: "+comisao);
+
+        System.out.println("Adicional de Bonificação: "+bonus);
+
+        System.out.println("Adicional de Periculosidade: "+cpericulosidade);
+
+        System.out.println("Adicional de Insalubridade: "+sgrau);
+
+        System.out.println("Adicional de Vale alimentação: "+valoralimentacao);
+
+        System.out.println("Desconto  do INSS: "+ins);
+
+        System.out.println("Desconto  do FGTS: "+fgt);
+
+        System.out.println("Desconto  do IRRF: "+descontoirf);
+
+        System.out.println("Desconto  do Vale trasporte: "+descontotrasporte);
+
+        System.out.println("Salario bruto do colaborador: "+salario);
+
+        System.out.println("Salario Hora do colaborador: "+shora);
+
+        System.out.println("Salario Liquido do colaborador: "+salariototal);
+
+    }//fim main
+}//fim class
